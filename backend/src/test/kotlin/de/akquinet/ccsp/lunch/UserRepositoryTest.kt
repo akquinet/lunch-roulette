@@ -1,6 +1,6 @@
 package de.akquinet.ccsp.lunch
 
-import de.akquinet.ccsp.lunch.controller.UserRepository
+import de.akquinet.ccsp.lunch.repository.UserRepository
 import de.akquinet.ccsp.lunch.data.User
 import org.assertj.core.api.Assertions
 import org.junit.Test

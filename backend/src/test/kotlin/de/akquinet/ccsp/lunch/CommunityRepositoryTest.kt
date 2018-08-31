@@ -1,8 +1,8 @@
 package de.akquinet.ccsp.lunch
 
-import de.akquinet.ccsp.lunch.controller.CommunityRepository
 import de.akquinet.ccsp.lunch.data.Community
 import de.akquinet.ccsp.lunch.data.User
+import de.akquinet.ccsp.lunch.repository.CommunityRepository
 import org.assertj.core.api.Assertions
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired

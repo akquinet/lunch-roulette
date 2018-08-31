@@ -1,7 +1,7 @@
 package de.akquinet.ccsp.lunch
 
-import de.akquinet.ccsp.lunch.controller.LocationRepository
-import de.akquinet.ccsp.lunch.controller.addAlias
+import de.akquinet.ccsp.lunch.repository.LocationRepository
+import de.akquinet.ccsp.lunch.repository.addAlias
 import de.akquinet.ccsp.lunch.data.Address
 import de.akquinet.ccsp.lunch.data.Location
 import org.springframework.beans.factory.annotation.Autowired

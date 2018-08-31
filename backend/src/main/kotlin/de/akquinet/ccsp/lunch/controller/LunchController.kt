@@ -1,6 +1,7 @@
 package de.akquinet.ccsp.lunch.controller
 
 import de.akquinet.ccsp.lunch.data.AbstractEntity
+import de.akquinet.ccsp.lunch.repository.LunchRepository
 import de.akquinet.ccsp.lunch.rest.InvalidStoreRequest
 import org.springframework.http.MediaType
 import org.springframework.validation.Errors
@@ -13,17 +14,19 @@ import java.util.stream.Collectors
 import javax.validation.ConstraintViolation
 import javax.validation.Valid
 
+const val STORE = "/store"
+const val LIST = "/"
 
-abstract class AbstractController<T : AbstractEntity> {
+abstract class LunchController<T : AbstractEntity> {
     abstract val repository: LunchRepository<T>
 
-    @GetMapping("/")
+    @GetMapping(LIST)
     fun findAll(): List<T> = repository.findAll()
 
     @GetMapping("/{name}")
     fun findByName(@PathVariable name: String): T? = repository.findByName(name)
 
-    @PostMapping("/store", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping(STORE, consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun store(@RequestBody @Valid value: T, errors: Errors): Int {
         check(errors)
 

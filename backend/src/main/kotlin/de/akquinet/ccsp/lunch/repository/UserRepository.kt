@@ -1,4 +1,4 @@
-package de.akquinet.ccsp.lunch.controller
+package de.akquinet.ccsp.lunch.repository
 
 import de.akquinet.ccsp.lunch.data.User
 import org.springframework.stereotype.Repository

@@ -1,9 +1,9 @@
 package de.akquinet.ccsp.lunch
 
-import de.akquinet.ccsp.lunch.controller.LocationRepository
-import de.akquinet.ccsp.lunch.controller.addAlias
 import de.akquinet.ccsp.lunch.data.Address
 import de.akquinet.ccsp.lunch.data.Location
+import de.akquinet.ccsp.lunch.repository.LocationRepository
+import de.akquinet.ccsp.lunch.repository.addAlias
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -28,7 +28,7 @@ class LocationRepositoryTest : AbstractSpringTest() {
         Assertions.assertThat(saved?.id).isGreaterThan(0)
 
         txTemplate.execute {
-            val loaded = repository.findById(saved.id)
+            val loaded = repository.findById(saved?.id!!)
             Assertions.assertThat(loaded.isPresent).isTrue()
             Assertions.assertThat(loaded.get()).isNotSameAs(location)
             Assertions.assertThat(loaded.get().aliases).containsExactly("Hippe")
@@ -42,7 +42,7 @@ class LocationRepositoryTest : AbstractSpringTest() {
 
     @Test
     fun duration() {
-        val location = Location( "Jens")
+        val location = Location("Jens")
         location.averageDuration = Duration.of(10, ChronoUnit.MINUTES)
         repository.save(location)
 
