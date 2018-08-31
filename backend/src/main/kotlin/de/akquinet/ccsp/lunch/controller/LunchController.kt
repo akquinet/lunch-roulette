@@ -15,12 +15,12 @@ import javax.validation.ConstraintViolation
 import javax.validation.Valid
 
 const val STORE = "/store"
-const val LIST = "/"
+const val LOOKUP = "/"
 
 abstract class LunchController<T : AbstractEntity> {
     abstract val repository: LunchRepository<T>
 
-    @GetMapping(LIST)
+    @GetMapping(LOOKUP)
     fun findAll(): List<T> = repository.findAll()
 
     @GetMapping("/{name}")
@@ -30,7 +30,7 @@ abstract class LunchController<T : AbstractEntity> {
     fun store(@RequestBody @Valid value: T, errors: Errors): Int {
         check(errors)
 
-        return repository.save(value).id
+        return repository.save(repository.prepareForSave(value)).id
     }
 
     companion object {

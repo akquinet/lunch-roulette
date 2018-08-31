@@ -1,5 +1,6 @@
 package de.akquinet.ccsp.lunch
 
+import de.akquinet.ccsp.lunch.controller.CommunityController
 import de.akquinet.ccsp.lunch.controller.STORE
 import de.akquinet.ccsp.lunch.controller.UserController
 import de.akquinet.ccsp.lunch.data.Community
@@ -15,7 +16,7 @@ class CommunityControllerTest : AbstractSpringTest() {
     lateinit var testRestTemplate: TestRestTemplate
 
     @Test
-    fun checkLookupName() {
+    fun checkStore() {
         val user = User("Ganter", "sarah.ganter@akquinet.de")
         testRestTemplate.postForEntity(UserController.PATH + STORE, user, Int::class.java)
 
@@ -24,13 +25,12 @@ class CommunityControllerTest : AbstractSpringTest() {
 
         assertEquals(HttpStatus.OK, userResponse?.statusCode)
 
-        val community = Community("ats", user)
-//
-//        testRestTemplate.postForEntity(CommunityController.PATH + STORE, community, Int::class.java)
-//
-//        val communityResponse = testRestTemplate
-//                .getForEntity(CommunityController.PATH + "/ats", User::class.java)
-//        assertEquals(HttpStatus.OK, communityResponse?.statusCode)
+        val community = Community("ats", userResponse.body!!)
 
+        testRestTemplate.postForEntity(CommunityController.PATH + STORE, community, Int::class.java)
+
+        val communityResponse = testRestTemplate
+                .getForEntity(CommunityController.PATH + "/ats", Community::class.java)
+        assertEquals(HttpStatus.OK, communityResponse?.statusCode)
     }
 }

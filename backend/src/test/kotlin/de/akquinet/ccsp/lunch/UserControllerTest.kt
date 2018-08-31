@@ -1,5 +1,8 @@
 package de.akquinet.ccsp.lunch
 
+import de.akquinet.ccsp.lunch.controller.LOOKUP
+import de.akquinet.ccsp.lunch.controller.STORE
+import de.akquinet.ccsp.lunch.controller.UserController
 import de.akquinet.ccsp.lunch.data.User
 import org.assertj.core.api.Assertions
 import org.junit.Assert.assertEquals
@@ -16,17 +19,17 @@ class UserControllerTest : AbstractSpringTest() {
     fun checkValidationEmail() {
         val user = User("Thanh Hno", "nonsense")
 
-        val response = testRestTemplate.postForEntity("/rest/users/store", user, Any::class.java)
+        val response = testRestTemplate.postForEntity(UserController.PATH + STORE, user, Any::class.java)
         assertEquals(HttpStatus.BAD_REQUEST, response.statusCode)
     }
 
     @Test
-    fun checkLookupName() {
+    fun checkStore() {
         val user = User("Markus", "markus.dahm@gmail.com")
-        testRestTemplate.postForEntity("/rest/users/store", user, Int::class.java)
+        testRestTemplate.postForEntity(UserController.PATH + STORE, user, Int::class.java)
 
         val result = testRestTemplate
-                .getForEntity("/rest/users/Markus", User::class.java)
+                .getForEntity(UserController.PATH + LOOKUP + "/Markus", User::class.java)
 
         assertEquals(HttpStatus.OK, result?.statusCode)
         Assertions.assertThat(result?.body?.name).isEqualTo("Markus")

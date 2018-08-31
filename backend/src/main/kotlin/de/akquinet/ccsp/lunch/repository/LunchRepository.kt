@@ -5,8 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.repository.NoRepositoryBean
 
 @NoRepositoryBean
-interface LunchRepository<T:AbstractEntity> : JpaRepository<T, Int> {
+interface LunchRepository<T : AbstractEntity> : JpaRepository<T, Int>, EntityRepository<T> {
     fun findByName(name: String): T
-//
-//    fun prepare(value: T): T = value
 }

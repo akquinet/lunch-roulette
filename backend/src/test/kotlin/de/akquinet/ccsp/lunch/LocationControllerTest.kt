@@ -1,5 +1,8 @@
 package de.akquinet.ccsp.lunch
 
+import de.akquinet.ccsp.lunch.controller.LOOKUP
+import de.akquinet.ccsp.lunch.controller.LocationController
+import de.akquinet.ccsp.lunch.controller.STORE
 import de.akquinet.ccsp.lunch.data.Address
 import de.akquinet.ccsp.lunch.data.Location
 import org.assertj.core.api.Assertions
@@ -19,7 +22,7 @@ class LocationControllerTest : AbstractSpringTest() {
 
         location.address = Address(streetName = "Potsdamer Straße", city = " ",
                 plz = "10783", streetNumber = "122")
-        val response = testRestTemplate.postForEntity("/rest/locations/store", location, Any::class.java)
+        val response = testRestTemplate.postForEntity(LocationController.PATH + STORE, location, Any::class.java)
         assertEquals(HttpStatus.BAD_REQUEST, response.statusCode)
         val errorText = response.body.toString()
 
@@ -32,7 +35,7 @@ class LocationControllerTest : AbstractSpringTest() {
 
         location.address = Address(streetName = "Potsdamer Straße", city = "Berlin",
                 plz = "783", streetNumber = "122")
-        val response = testRestTemplate.postForEntity("/rest/locations/store", location, Any::class.java)
+        val response = testRestTemplate.postForEntity(LocationController.PATH + STORE, location, Any::class.java)
         assertEquals(HttpStatus.BAD_REQUEST, response.statusCode)
         val errorText = response.body.toString()
 
@@ -42,7 +45,7 @@ class LocationControllerTest : AbstractSpringTest() {
     @Test
     fun notFound() {
         val result = testRestTemplate
-                .getForEntity("/rest/locations/BurgerKing", Any::class.java)
+                .getForEntity(LocationController.PATH + LOOKUP + "/BurgerKing", Any::class.java)
 
         assertEquals(HttpStatus.NOT_FOUND, result?.statusCode)
     }
@@ -50,10 +53,10 @@ class LocationControllerTest : AbstractSpringTest() {
     @Test
     fun checkLookupName() {
         val location = Location("McDonalds")
-        testRestTemplate.postForEntity("/rest/locations/store", location, Int::class.java)
+        testRestTemplate.postForEntity(LocationController.PATH + STORE, location, Int::class.java)
 
         val result = testRestTemplate
-                .getForEntity("/rest/locations/McDonalds", Location::class.java)
+                .getForEntity(LocationController.PATH + LOOKUP + "/McDonalds", Location::class.java)
 
         assertEquals(HttpStatus.OK, result?.statusCode)
         Assertions.assertThat(result?.body?.name).isEqualTo("McDonalds")
