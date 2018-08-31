@@ -16,7 +16,7 @@ class MessagingTest : AbstractSpringTest() {
 
     @Before
     fun setup() {
-        client = MessagingClientEndpoint(URI("ws://localhost:$randomPort/lunchroulette"
+        client = MessagingClientEndpoint(URI("ws://localhost:$randomPort/"
                 + MessagingServerEndpoint.PATH + "/jens"))
     }
 
@@ -32,7 +32,7 @@ class MessagingTest : AbstractSpringTest() {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            val clientEndpoint = MessagingClientEndpoint(URI("ws://localhost:8080/lunchroulette"
+            val clientEndpoint = MessagingClientEndpoint(URI("ws://localhost:8080/"
                     + MessagingServerEndpoint.PATH + "/hippe"))
 //            clientEndpoint.sendText("{'from':'client','to':'server','content':'Ich bins'}".replace('\'', '"'))
             clientEndpoint.sendMessage(Message("from", "to", "content"))
