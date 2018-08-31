@@ -1,0 +1,74 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: System-ui,Helvetica,Arial, sans-serif; }
+
+.table-headline {
+  border-bottom: 1px solid black;
+  padding: 0 2em;
+  text-transform: uppercase;
+  font-family: "System-ui","Helvetica","Arial", sans-serif; }
+
+td {
+  text-align: center; }
+
+.main-header {
+  background-color: #61a9bb; }
+
+.logo {
+  display: block;
+  height: 7em;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1em; }
+
+.location-container {
+  height: 4em; }
+
+.centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1em;
+  text-align: center; }
+
+#chooseLocationButton {
+  background-color: #61a9bb;
+  border-radius: 12px;
+  color: #fff;
+  cursor: pointer;
+  font-family: "System-ui","Helvetica","Arial", sans-serif;
+  font-size: 1em;
+  letter-spacing: 2;
+  line-height: 45px;
+  margin: 0 0 2em;
+  max-width: 160px;
+  text-transform: uppercase;
+  transition: all 0.3s ease 0s;
+  width: 100%; }
+  #chooseLocationButton:hover {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    background-color: black;
+    color: #fff;
+    text-decoration: none;
+    transform: scale(0.9); }
+
+input {
+  cursor: pointer; }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0; }
+
+.weekly-table {
+  margin: 2em auto; }
+
+.notAvailable {
+  text-decoration: line-through; }
+
+.notInTime {
+  color: red; }
+
+/*# sourceMappingURL=style.css.map */
