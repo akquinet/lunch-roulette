@@ -4,6 +4,8 @@
 # Build
     mvn clean install
 
+# Run
+
 Afterwards the command "docker images" should show an image named "ats/lunchroulette", which you can run
 like this:
 
