@@ -15,7 +15,7 @@
     <artifactId>lunchroulette-backend</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-  	<name>Lunch-Roulette backend by Markus</name>
+    <name>Lunch-Roulette backend by Markus</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -130,70 +130,36 @@
 
         <plugins>
             <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.1.0</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+
                 <executions>
                     <execution>
-                        <id>copy-resources</id>
-                        <phase>install</phase>
-
+                        <id>unpack webapp</id>
+                        <phase>generate-resources</phase>
                         <goals>
-                            <goal>copy-resources</goal>
+                            <goal>unpack</goal>
                         </goals>
 
                         <configuration>
-                            <outputDirectory>${basedir}/target/docker-build</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>de.akquinet.ccsp.lunch</groupId>
+                                    <artifactId>lunchroulette-frontend</artifactId>
+                                    <!-- ID of assembly-->
+                                    <classifier>webapp</classifier>
+                                    <type>zip</type>
+                                    <version>${project.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.outputDirectory}/META-INF/resources</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
 
-                            <resources>
-                                <resource>
-                                    <directory>${basedir}/src/main/docker</directory>
-                                </resource>
-
-                                <resource>
-                                    <directory>${project.build.directory}</directory>
-                                    <includes>
-                                        <include>${project.build.finalName}.jar</include>
-                                    </includes>
-                                </resource>
-                            </resources>
+                            <overWriteReleases>true</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>${docker.plugin.version}</version>
-
-                <configuration>
-                    <images>
-                        <image>
-                            <name>${docker.name}</name>
-                            <build>
-                                <dockerFileDir>${basedir}/target/docker-build</dockerFileDir>
-                            </build>
-
-                            <run>
-                                <ports>
-                                    <!-- Port mappings: Container internal port (which must be exposed) will be
-                                   dynamically mapped and this (random) port will be assigned to the maven variable
-                                   ${artemis.port}. Multiple port mapping can be specified here-->
-                                    <port>8888:8080</port>
-                                    <port>5555:5432</port>
-                                    <port>8787:8787</port>
-                                </ports>
-
-
-                                <log>
-                                    <prefix>lunch-</prefix>
-                                    <date>default</date>
-                                    <color>cyan</color>
-                                </log>
-                            </run>
-                        </image>
-                    </images>
-                </configuration>
             </plugin>
 
             <plugin>

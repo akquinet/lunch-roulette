@@ -1,11 +1,8 @@
 # Checkout sources
-    git clone https://mdahm@git.spree.de/scm-manager/git/ccsp/lunchroulette-backend
+    git clone https://github.com/akquinet/lunch-roulette.git
 
-# Build and test
+# Build
     mvn clean install
-
-# Build & run Docker image
-    mvn docker:build
 
 Afterwards the command "docker images" should show an image named "ats/lunchroulette", which you can run
 like this:
