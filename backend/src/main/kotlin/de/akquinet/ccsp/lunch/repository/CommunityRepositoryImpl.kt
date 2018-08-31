@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import java.util.stream.Collectors
 
 
+@Suppress("unused")
 class CommunityRepositoryImpl : EntityRepository<Community> {
     @Autowired
     lateinit var userRepository: UserRepository
@@ -16,20 +17,17 @@ class CommunityRepositoryImpl : EntityRepository<Community> {
                 .map { u -> makePersistent(u) }
                 .collect(Collectors.toList<User>())
 
-        return Community(community.name, founder).also { community ->
-            community.addParticipants(participants)
+        return Community(community.name, founder).also { c ->
+            c.addParticipants(participants)
         }
     }
 
     private fun makePersistent(user: User): User {
-        val existingUser: User? = userRepository.findById(user.id).orElseGet { null }
+        val existingUser = userRepository.findById(user.id)
 
-        if (existingUser != null) {
-            existingUser.community = null
-            return existingUser
-        } else {
-            user.community = null
-            return userRepository.save(user)
-        }
+        return if (existingUser.isPresent)
+            existingUser.get().also { u -> u.community = null }
+        else
+            userRepository.save(user.also { u -> u.community = null })
     }
 }
