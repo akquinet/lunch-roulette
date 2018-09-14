@@ -1,6 +1,6 @@
 FROM postgres
 
-RUN set -x && apt-get update && apt-get install -y openjdk-8-jdk
+RUN set -x && apt-get update && apt-get install -y openjdk-8-jre
 
 # Expected in target/docker directoy, copied by maven resources plugin
 
