@@ -13,17 +13,17 @@ class CommunityRepositoryTest : AbstractSpringTest() {
 
     @Test
     fun persistPlain() {
-        val sarah = User("diswutz", "diswutz@gmx.net")
-        val community = Community("tech@spree", sarah)
+        val markus = User("diswutz", "diswutz@gmx.net")
+        val community = Community("ats tech@spree", markus)
 
-        Assertions.assertThat(community.participants).contains(sarah)
+        Assertions.assertThat(community.participants).contains(markus)
 
         txTemplate.execute { repository.save(community) }
 
         txTemplate.execute {
-            val loaded = repository.findByName("tech@spree")
+            val loaded = repository.findByName("ats tech@spree")
             Assertions.assertThat(loaded).isEqualTo(community)
-            Assertions.assertThat(loaded.participants).contains(sarah)
+            Assertions.assertThat(loaded.participants).contains(markus)
         }
     }
 }

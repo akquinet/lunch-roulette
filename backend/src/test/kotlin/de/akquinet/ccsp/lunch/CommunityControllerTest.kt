@@ -25,12 +25,12 @@ class CommunityControllerTest : AbstractSpringTest() {
 
         assertEquals(HttpStatus.OK, userResponse?.statusCode)
 
-        val community = Community("ats", userResponse.body!!)
+        val community = Community("akquinet tech@spree", userResponse.body!!)
 
         testRestTemplate.postForEntity(CommunityController.PATH + STORE, community, Int::class.java)
 
         val communityResponse = testRestTemplate
-                .getForEntity(CommunityController.PATH + "/ats", Community::class.java)
+                .getForEntity(CommunityController.PATH + "/akquinet tech@spree", Community::class.java)
         assertEquals(HttpStatus.OK, communityResponse?.statusCode)
     }
 }

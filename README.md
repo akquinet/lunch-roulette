@@ -24,15 +24,15 @@ If you wish to backup the data between container runs you may add a volume mount
 
 # REST API
 Documentation of the available interfaces, tested via curl
-  
+
 ## Locations
 
 Locations are places where to go to for lunch...
 
 ### Add a location
     curl -i -v -X POST -H "Content-Type: application/json" -d \
-        '{"id":0,"name":"McDonalds","style":"Unbekannt","aliases":["Burger King"], \
-        "address":{"streetName":"Bülowstr.","streetNumber":"66","plz":"10783","city":"Berlin","telephoneNumber":""}, \
+        '{"name":"McDonalds","style":"Unbekannt","aliases":["Burger King"],
+        "address":{"streetName":"Bülowstr.","streetNumber":"66","plz":"10783","city":"Berlin","telephoneNumber":""},
         "averageDuration":"PT30M","rating":2}]' \
         'http://localhost:8888/rest/locations/store'
 
@@ -43,6 +43,47 @@ Locations are places where to go to for lunch...
 ### Get single location via its name
 
     curl http://localhost:8888/rest/locations/McDonalds
+
+
+## Users
+
+Users register and join communities
+
+### Add a user
+    curl -i -v -X POST -H "Content-Type: application/json" -d \
+        '{ "name" : "Markus", "email" : "markus.dahm@gmail.com"}' \
+        'http://localhost:8888/rest/users/store'
+
+### Retrieve list with all existing users:
+    
+    curl http://localhost:8888/rest/users/
+
+### Get single users via name
+
+    curl http://localhost:8888/rest/users/Markus
+
+## Communities
+
+Communities group users together
+
+### Add a comunity (including founder)
+    curl -i -v -X POST -H "Content-Type: application/json" -d \
+        '{
+           "name": "akquinet tech@spree",
+           "founder": {
+             "name": "Sarah",
+             "email": "sarah.ganter@akquinet.de"
+           }
+         }' \
+        'http://localhost:8888/rest/communities/store'
+
+### Retrieve list with all existing communities:
+    
+    curl http://localhost:8888/rest/communities/
+
+### Get single communities via name
+
+    curl http://localhost:8888/rest/communities/"akquinet%20tech@spree"
 
 
 
