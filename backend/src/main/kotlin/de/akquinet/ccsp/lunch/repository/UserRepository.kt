@@ -7,10 +7,8 @@ import org.springframework.stereotype.Repository
 interface UserRepository : LunchRepository<User>
 
 fun UserRepository.prepareForCommunity(user: User): User {
-    val existingUser = findById(user.id)
+    val existingUser = findByName(user.name)
 
-    return if (existingUser.isPresent)
-        existingUser.get().also { u -> u.community = null }
-    else
-        save(user.also { u -> u.community = null })
+    return existingUser?.also { u -> u.community = null }
+            ?: save(user.also { u -> u.community = null })
 }

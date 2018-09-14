@@ -9,7 +9,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.dao.EmptyResultDataAccessException
 import java.time.Duration
 import java.time.temporal.ChronoUnit
 
@@ -35,9 +34,9 @@ class LocationRepositoryTest : AbstractSpringTest() {
         }
     }
 
-    @Test(expected = EmptyResultDataAccessException::class)
+    @Test
     fun findByName() {
-        repository.findByName("Gibt's nicht")
+        assertThat(repository.findByName("Gibt's nicht")).isNull()
     }
 
     @Test

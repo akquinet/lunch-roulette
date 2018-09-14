@@ -19,6 +19,14 @@ class RestResponseEntityExceptionHandler : ResponseEntityExceptionHandler() {
                 HttpStatus.BAD_REQUEST)
     }
 
+    @ExceptionHandler(EntityNotFoundException::class)
+    protected fun handleNotFound(ex: EntityNotFoundException, request: WebRequest): ResponseEntity<Any> {
+        logger.error("Invalid request", ex)
+
+        return ResponseEntity(ErrorDetails(HttpStatus.NOT_FOUND, ex.message ?: ""),
+                HttpStatus.NOT_FOUND)
+    }
+
     @ExceptionHandler(EmptyResultDataAccessException::class)
     protected fun handleEmptyResult(
             ex: EmptyResultDataAccessException, request: WebRequest): ResponseEntity<Any> {
@@ -31,7 +39,7 @@ class RestResponseEntityExceptionHandler : ResponseEntityExceptionHandler() {
     @ExceptionHandler
     protected fun handleError(
             ex: RuntimeException, request: WebRequest): ResponseEntity<Any> {
-        logger.error("Interhal server error", ex)
+        logger.error("Internal server error", ex)
 
         return ResponseEntity(ErrorDetails(HttpStatus.INTERNAL_SERVER_ERROR, ex.message ?: ""),
                 HttpStatus.INTERNAL_SERVER_ERROR)

@@ -2,6 +2,7 @@ package de.akquinet.ccsp.lunch.controller
 
 import de.akquinet.ccsp.lunch.data.AbstractEntity
 import de.akquinet.ccsp.lunch.repository.LunchRepository
+import de.akquinet.ccsp.lunch.rest.EntityNotFoundException
 import de.akquinet.ccsp.lunch.rest.InvalidStoreRequest
 import org.springframework.http.MediaType
 import org.springframework.validation.Errors
@@ -24,7 +25,7 @@ abstract class LunchController<T : AbstractEntity> {
     fun findAll(): List<T> = repository.findAll()
 
     @GetMapping("/{name}")
-    fun findByName(@PathVariable name: String): T? = repository.findByName(name)
+    fun findByName(@PathVariable name: String): T? = repository.findByName(name) ?: throw EntityNotFoundException(name)
 
     @PostMapping(STORE, consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun store(@RequestBody @Valid value: T, errors: Errors): Int {
@@ -34,7 +35,7 @@ abstract class LunchController<T : AbstractEntity> {
     }
 
     companion object {
-        private fun check(errors: Errors) {
+        fun check(errors: Errors) {
             if (errors.hasErrors()) {
                 throw InvalidStoreRequest(createErrorString(errors))
             }

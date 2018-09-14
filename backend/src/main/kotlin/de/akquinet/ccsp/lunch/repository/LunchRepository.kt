@@ -6,5 +6,5 @@ import org.springframework.data.repository.NoRepositoryBean
 
 @NoRepositoryBean
 interface LunchRepository<T : AbstractEntity> : JpaRepository<T, Int>, EntityRepository<T> {
-    fun findByName(name: String): T
+    fun findByName(name: String): T?
 }

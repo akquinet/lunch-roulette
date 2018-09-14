@@ -23,7 +23,7 @@ class CommunityRepositoryTest : AbstractSpringTest() {
         txTemplate.execute {
             val loaded = repository.findByName("ats tech@spree")
             Assertions.assertThat(loaded).isEqualTo(community)
-            Assertions.assertThat(loaded.participants).contains(markus)
+            Assertions.assertThat(loaded?.participants).contains(markus)
         }
     }
 }

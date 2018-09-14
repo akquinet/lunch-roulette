@@ -24,7 +24,7 @@ class LocationControllerTest : AbstractSpringTest() {
                 plz = "10783", streetNumber = "122")
         val response = testRestTemplate.postForEntity(LocationController.PATH + STORE, location, Any::class.java)
         assertEquals(HttpStatus.BAD_REQUEST, response.statusCode)
-        val errorText = response.body.toString()
+        val errorText = response.body?.toString()
 
         Assertions.assertThat(errorText).contains("address.city")
     }

@@ -9,7 +9,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.http.HttpStatus
+import org.springframework.http.*
+
 
 class CommunityControllerTest : AbstractSpringTest() {
     @Autowired
@@ -32,5 +33,32 @@ class CommunityControllerTest : AbstractSpringTest() {
         val communityResponse = testRestTemplate
                 .getForEntity(CommunityController.PATH + "/akquinet tech@spree", Community::class.java)
         assertEquals(HttpStatus.OK, communityResponse?.statusCode)
+    }
+
+    @Test
+    fun checkAddUser() {
+        val sarah = User("SarahGanter", "sarahganter@web.de")
+        val community = Community("lunch", sarah)
+        community.participants.clear()
+
+        testRestTemplate.postForEntity(CommunityController.PATH + STORE, community, Int::class.java)
+
+        val user = User("MarkusDahm", "markusdahm@web.de")
+        testRestTemplate.postForEntity(UserController.PATH + STORE, user, Int::class.java)
+
+        val headers = HttpHeaders()
+        headers.contentType = MediaType.APPLICATION_JSON
+        val entity = HttpEntity(user, headers)
+
+        val addResponse= testRestTemplate.exchange(
+                CommunityController.PATH + "/lunch/add-user",
+                HttpMethod.PUT, entity, String::class.java)
+        assertEquals(HttpStatus.OK, addResponse?.statusCode)
+
+        val communityResponse = testRestTemplate
+                .getForEntity(CommunityController.PATH + "/lunch", Community::class.java)
+        assertEquals(HttpStatus.OK, communityResponse?.statusCode)
+
+        assertEquals(2, communityResponse.body?.participants?.size)
     }
 }
