@@ -51,7 +51,7 @@ Users register and join communities
 
 ### Add a user
     curl -i -v -X POST -H "Content-Type: application/json" -d \
-        '{ "name" : "Markus", "email" : "markus.dahm@gmail.com"}' \
+        '{ "name" : "Markus", "email" : "markus.dahm@akquinet.de"}' \
         'http://localhost:8888/rest/users/store'
 
 ### Retrieve list with all existing users:
@@ -77,11 +77,20 @@ Communities group users together
          }' \
         'http://localhost:8888/rest/communities/store'
 
+### Add user to community
+
+    curl -i -v -X PUT -H "Content-Type: application/json" -d \
+        '{
+           "name": "Markus",
+           "email": "markus.dahm@akquinet.de"
+         }' \
+        'http://localhost:8888/rest/communities/akquinet%20tech@spree/add-user'
+
 ### Retrieve list with all existing communities:
     
     curl http://localhost:8888/rest/communities/
 
-### Get single communities via name
+### Get single community via name
 
     curl http://localhost:8888/rest/communities/"akquinet%20tech@spree"
 
