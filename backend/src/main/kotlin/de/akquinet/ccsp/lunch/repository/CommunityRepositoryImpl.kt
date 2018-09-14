@@ -12,22 +12,13 @@ class CommunityRepositoryImpl : EntityRepository<Community> {
     lateinit var userRepository: UserRepository
 
     override fun prepareForSave(community: Community): Community {
-        val founder = makePersistent(community.founder)
+        val founder = userRepository.prepareForCommunity(community.founder)
         val participants = community.additionalParticipantsOnly().stream()
-                .map { u -> makePersistent(u) }
+                .map { u -> userRepository.prepareForCommunity(u) }
                 .collect(Collectors.toList<User>())
 
         return Community(community.name, founder).also { c ->
             c.addParticipants(participants)
         }
-    }
-
-    private fun makePersistent(user: User): User {
-        val existingUser = userRepository.findById(user.id)
-
-        return if (existingUser.isPresent)
-            existingUser.get().also { u -> u.community = null }
-        else
-            userRepository.save(user.also { u -> u.community = null })
     }
 }
