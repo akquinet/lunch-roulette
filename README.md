@@ -25,13 +25,24 @@ If you wish to backup the data between container runs you may add a volume mount
 # REST API
 Documentation of the available interfaces, tested via curl
   
-## Add a location
+## Locations
+
+Locations are places where to go to for lunch...
+
+### Add a location
     curl -i -v -X POST -H "Content-Type: application/json" -d \
         '{"id":0,"name":"McDonalds","style":"Unbekannt","aliases":["Burger King"], \
         "address":{"streetName":"Bülowstr.","streetNumber":"66","plz":"10783","city":"Berlin","telephoneNumber":""}, \
         "averageDuration":"PT30M","rating":2}]' \
         'http://localhost:8888/rest/locations/store'
 
-## Retrieve a JSON list with all existing locations:
+### Retrieve list with all existing locations:
     
     curl http://localhost:8888/rest/locations/
+
+### Get single location via its name
+
+    curl http://localhost:8888/rest/locations/McDonalds
+
+
+
