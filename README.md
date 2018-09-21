@@ -68,21 +68,21 @@ Communities group users together
 
 ### Add a comunity (including founder)
     curl -i -v -X POST -H "Content-Type: application/json" -d \
-        '{
-           "name": "akquinet tech@spree",
-           "founder": {
-             "name": "Sarah",
-             "email": "sarah.ganter@akquinet.de"
-           }
+        '{ \
+           "name": "akquinet tech@spree", \
+           "founder": { \
+             "name": "Sarah", \
+             "email": "sarah.ganter@akquinet.de" \
+           } \
          }' \
         'http://localhost:8888/rest/communities/store'
 
 ### Add user to community
 
     curl -i -v -X PUT -H "Content-Type: application/json" -d \
-        '{
-           "name": "Markus",
-           "email": "markus.dahm@akquinet.de"
+        '{ \
+           "name": "Markus", \
+           "email": "markus.dahm@akquinet.de" \
          }' \
         'http://localhost:8888/rest/communities/akquinet%20tech@spree/add-user'
 

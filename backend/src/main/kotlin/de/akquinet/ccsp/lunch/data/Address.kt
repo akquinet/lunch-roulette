@@ -29,4 +29,8 @@ data class Address(
     @Column(name = "TELEPHONE", length = 30, nullable = false)
     @NotNull
     var telephoneNumber: String = ""
+
+    var latitude: Float = 52.4962978F
+
+    var longitude: Float = 13.2868977F
 }
