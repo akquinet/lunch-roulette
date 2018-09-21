@@ -9,11 +9,11 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 
 
 @Configuration
-class JacksonController{
+class JacksonController {
     @Autowired
     private lateinit var builder: Jackson2ObjectMapperBuilder
 
     @Bean
     fun objectMapper(): ObjectMapper =
-        builder.featuresToEnable(SerializationFeature.INDENT_OUTPUT).build()
+            builder.featuresToEnable(SerializationFeature.INDENT_OUTPUT).build()
 }
